@@ -44,11 +44,6 @@ _start:
 
 	mov esi, esp
 	mov eax, 0
-
-	;Imprimo la cantidad de argumentos
-	
-
-
 	
 	;ARGUMENTOS DEL PROGRAMA (se imprime el path y cualquier otro argumento)	
 	;Muestro el mensaje:
@@ -67,11 +62,14 @@ _start:
 	call print
 	call print
 
-	add esi, 4		;Me muevo en ESP + 4 para imprimir todo el resto: en ESP no hay un puntero sino un numero
+
+	add esi, 4		;Me muevo en ESP + 4 para imprimir todo el resto: en ESP no hay un puntero sino un numero. 
+					;A partir de aca si hay strings (punteros)
+
 	mov eax, 4 		;Ya recorri 4 bytes en el stack
 
 
-	call print_til_null ;Imprimo los contenidos del stack hasta encontrar un null
+	call print_til_null ;Imprimo los contenidos del stack (son strings) hasta encontrar un null
 
 
 	;VARIABLES DE ENTORNO
@@ -80,11 +78,10 @@ _start:
 	call print_nice_message
 		
 
-	call print_til_null	;Imprimo los contenidos del stack hasta encontrar un null
+	call print_til_null	;Imprimo los contenidos del stack (son strings) hasta encontrar un null
 
 
 	;Imprimo mensaje final (cantidad de bytes)
-	mov ebx, msg2
 	call print_final_message
 
 	call exit
@@ -119,7 +116,7 @@ print_final_message:
 	push edx
 	push ebx
 
-	mov edx, ebx	;Guardo aca el string
+	mov edx, msg2	;Guardo aca el string
 
 	mov ebx, newline
 	call print

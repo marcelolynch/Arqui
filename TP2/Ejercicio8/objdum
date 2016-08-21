@@ -1,0 +1,150 @@
+
+ejercicio8:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+08048080 <_start>:
+ 8048080:	b9 24 00 00 00       	mov    ecx,0x24
+ 8048085:	c1 e9 02             	shr    ecx,0x2
+ 8048088:	89 ca                	mov    edx,ecx
+ 804808a:	bb 86 91 04 08       	mov    ebx,0x8049186
+
+0804808f <_start.go>:
+ 804808f:	e8 31 00 00 00       	call   80480c5 <maxAndSwap>
+ 8048094:	e2 f9                	loop   804808f <_start.go>
+ 8048096:	89 d1                	mov    ecx,edx
+ 8048098:	ba 00 00 00 00       	mov    edx,0x0
+
+0804809d <_start.print>:
+ 804809d:	e8 03 00 00 00       	call   80480a5 <printNext>
+ 80480a2:	42                   	inc    edx
+ 80480a3:	e2 f8                	loop   804809d <_start.print>
+
+080480a5 <printNext>:
+ 80480a5:	50                   	push   eax
+ 80480a6:	8b 04 93             	mov    eax,DWORD PTR [ebx+edx*4]
+ 80480a9:	53                   	push   ebx
+ 80480aa:	bb ac 91 04 08       	mov    ebx,0x80491ac
+ 80480af:	e8 5c 00 00 00       	call   8048110 <numtos>
+ 80480b4:	e8 92 00 00 00       	call   804814b <print>
+ 80480b9:	bb 84 91 04 08       	mov    ebx,0x8049184
+ 80480be:	e8 88 00 00 00       	call   804814b <print>
+ 80480c3:	5b                   	pop    ebx
+ 80480c4:	58                   	pop    eax
+
+080480c5 <maxAndSwap>:
+ 80480c5:	60                   	pusha  
+ 80480c6:	e8 19 00 00 00       	call   80480e4 <findMaxIndex>
+ 80480cb:	49                   	dec    ecx
+ 80480cc:	e8 02 00 00 00       	call   80480d3 <swap>
+ 80480d1:	61                   	popa   
+ 80480d2:	c3                   	ret    
+
+080480d3 <swap>:
+ 80480d3:	57                   	push   edi
+ 80480d4:	56                   	push   esi
+ 80480d5:	8b 3c 8b             	mov    edi,DWORD PTR [ebx+ecx*4]
+ 80480d8:	8b 34 83             	mov    esi,DWORD PTR [ebx+eax*4]
+ 80480db:	89 34 8b             	mov    DWORD PTR [ebx+ecx*4],esi
+ 80480de:	89 3c 83             	mov    DWORD PTR [ebx+eax*4],edi
+ 80480e1:	5e                   	pop    esi
+ 80480e2:	5f                   	pop    edi
+ 80480e3:	c3                   	ret    
+
+080480e4 <findMaxIndex>:
+ 80480e4:	53                   	push   ebx
+ 80480e5:	51                   	push   ecx
+ 80480e6:	52                   	push   edx
+ 80480e7:	56                   	push   esi
+ 80480e8:	b8 00 00 00 00       	mov    eax,0x0
+ 80480ed:	8b 34 8b             	mov    esi,DWORD PTR [ebx+ecx*4]
+
+080480f0 <findMaxIndex.findmax>:
+ 80480f0:	49                   	dec    ecx
+ 80480f1:	3b 34 8b             	cmp    esi,DWORD PTR [ebx+ecx*4]
+ 80480f4:	7d 05                	jge    80480fb <findMaxIndex.next>
+ 80480f6:	8b 34 8b             	mov    esi,DWORD PTR [ebx+ecx*4]
+ 80480f9:	89 c8                	mov    eax,ecx
+
+080480fb <findMaxIndex.next>:
+ 80480fb:	85 c9                	test   ecx,ecx
+ 80480fd:	75 f1                	jne    80480f0 <findMaxIndex.findmax>
+ 80480ff:	5e                   	pop    esi
+ 8048100:	5a                   	pop    edx
+ 8048101:	59                   	pop    ecx
+ 8048102:	5b                   	pop    ebx
+ 8048103:	c3                   	ret    
+ 8048104:	66 90                	xchg   ax,ax
+ 8048106:	66 90                	xchg   ax,ax
+ 8048108:	66 90                	xchg   ax,ax
+ 804810a:	66 90                	xchg   ax,ax
+ 804810c:	66 90                	xchg   ax,ax
+ 804810e:	66 90                	xchg   ax,ax
+
+08048110 <numtos>:
+ 8048110:	60                   	pusha  
+ 8048111:	9c                   	pushf  
+ 8048112:	89 de                	mov    esi,ebx
+ 8048114:	bb 00 00 00 00       	mov    ebx,0x0
+ 8048119:	b9 0a 00 00 00       	mov    ecx,0xa
+
+0804811e <numtos.loop>:
+ 804811e:	ba 00 00 00 00       	mov    edx,0x0
+ 8048123:	f7 f1                	div    ecx
+ 8048125:	83 c2 30             	add    edx,0x30
+ 8048128:	88 93 cc 91 04 08    	mov    BYTE PTR [ebx+0x80491cc],dl
+ 804812e:	43                   	inc    ebx
+ 804812f:	83 f8 00             	cmp    eax,0x0
+ 8048132:	75 ea                	jne    804811e <numtos.loop>
+
+08048134 <numtos.reverseloop>:
+ 8048134:	4b                   	dec    ebx
+ 8048135:	8a 8b cc 91 04 08    	mov    cl,BYTE PTR [ebx+0x80491cc]
+ 804813b:	88 0e                	mov    BYTE PTR [esi],cl
+ 804813d:	46                   	inc    esi
+ 804813e:	83 fb 00             	cmp    ebx,0x0
+ 8048141:	74 02                	je     8048145 <numtos.fin>
+ 8048143:	eb ef                	jmp    8048134 <numtos.reverseloop>
+
+08048145 <numtos.fin>:
+ 8048145:	c6 06 00             	mov    BYTE PTR [esi],0x0
+ 8048148:	9d                   	popf   
+ 8048149:	61                   	popa   
+ 804814a:	c3                   	ret    
+
+0804814b <print>:
+ 804814b:	60                   	pusha  
+ 804814c:	e8 19 00 00 00       	call   804816a <strlen>
+ 8048151:	89 d9                	mov    ecx,ebx
+ 8048153:	89 c2                	mov    edx,eax
+ 8048155:	bb 01 00 00 00       	mov    ebx,0x1
+ 804815a:	b8 04 00 00 00       	mov    eax,0x4
+ 804815f:	cd 80                	int    0x80
+ 8048161:	61                   	popa   
+ 8048162:	c3                   	ret    
+
+08048163 <exit>:
+ 8048163:	b8 01 00 00 00       	mov    eax,0x1
+ 8048168:	cd 80                	int    0x80
+
+0804816a <strlen>:
+ 804816a:	51                   	push   ecx
+ 804816b:	53                   	push   ebx
+ 804816c:	9c                   	pushf  
+ 804816d:	b9 00 00 00 00       	mov    ecx,0x0
+
+08048172 <strlen.loop>:
+ 8048172:	8a 03                	mov    al,BYTE PTR [ebx]
+ 8048174:	3c 00                	cmp    al,0x0
+ 8048176:	74 04                	je     804817c <strlen.fin>
+ 8048178:	41                   	inc    ecx
+ 8048179:	43                   	inc    ebx
+ 804817a:	eb f6                	jmp    8048172 <strlen.loop>
+
+0804817c <strlen.fin>:
+ 804817c:	89 c8                	mov    eax,ecx
+ 804817e:	9d                   	popf   
+ 804817f:	5b                   	pop    ebx
+ 8048180:	59                   	pop    ecx
+ 8048181:	c3                   	ret    

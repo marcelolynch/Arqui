@@ -6,8 +6,8 @@ GLOBAL _start
 section .text
 _start:
 	mov		ebp,esp
-	mov		edx,[ebp]
-	mov		ebx,[ebp+76+4*edx]
+	mov		eax,[ebp]
+	mov		ebx,[ebp + 4*eax + 76] ;El 76 es empirico, ahi esta $USER
 	call print
 	call exit
 

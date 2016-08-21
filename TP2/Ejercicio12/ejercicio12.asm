@@ -45,10 +45,15 @@ _start:
 	mov esi, esp
 	mov eax, 0
 
-	;Primero imprimo la cantidad de argumentos
+	;Imprimo la cantidad de argumentos
 	
-	mov ebx, sep
-	call print
+
+
+	
+	;ARGUMENTOS DEL PROGRAMA (se imprime el path y cualquier otro argumento)	
+	;Muestro el mensaje:
+	mov ebx, msg0
+	call print_nice_message
 
 	mov ebx, msg_args
 	call print
@@ -58,68 +63,85 @@ _start:
 	call numtos
 	call print
 
-	add esi, 4		;Me muevo en ESP + 4 para imprimir todo el resto: en ESP no hay un puntero sino un numero
-	mov eax, 4 		;Ya recorri 4 bytes en el stack
-
-	;ARGUMENTOS DEL PROGRAMA (se imprime el path y cualquier otro argumento)
-
-	;Muesto el mensaje:
-	mov ebx, sep
-	call print
-
 	mov ebx, newline
 	call print
-
-	;Imprimo mensaje
-	mov ebx, sep
 	call print
 
-	mov ebx, msg0
-	call print
-		
-	mov ebx, sep
-	call print
+	add esi, 4		;Me muevo en ESP + 4 para imprimir todo el resto: en ESP no hay un puntero sino un numero
+	mov eax, 4 		;Ya recorri 4 bytes en el stack
 
 
 	call print_til_null ;Imprimo los contenidos del stack hasta encontrar un null
 
 
 	;VARIABLES DE ENTORNO
-	;Primero imprimo mensaje
-	mov ebx, newline
-	call print
-
 	;Imprimo mensaje
-	mov ebx, sep
-	call print
-
 	mov ebx, msg1
-	call print
+	call print_nice_message
 		
-	mov ebx, sep
-	call print
 
-
-	call print_til_null
+	call print_til_null	;Imprimo los contenidos del stack hasta encontrar un null
 
 
 	;Imprimo mensaje final (cantidad de bytes)
+	mov ebx, msg2
+	call print_final_message
+
+	call exit
+
+
+print_nice_message:
+	push edx
+	push ebx
+
+	mov edx, ebx	;Guardo aca
+
+	mov ebx, newline
+	call print
+
+
 	mov ebx, sep
 	call print
 
-	mov ebx, msg2
+	mov ebx, edx
+	call print
+	
+	mov ebx, sep
+	call print
+
+	pop ebx
+	pop edx
+	ret
+
+
+;Se distingue del anterior porque hay que imprimir el numerito :(
+print_final_message:
+	push edx
+	push ebx
+
+	mov edx, ebx	;Guardo aca el string
+
+	mov ebx, newline
+	call print
+
+
+	mov ebx, sep
+	call print
+
+	mov ebx, edx
 	call print
 	
 	mov ebx, aux
 	call numtos
 	call print
-	
+
 	mov ebx, sep
 	call print
 
-	call exit
 
-
+	pop ebx
+	pop edx
+	ret
 
 
 print_til_null:

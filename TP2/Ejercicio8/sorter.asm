@@ -1,4 +1,6 @@
 GLOBAL selection_sort
+extern print
+extern numtos
 
 ; Se implementa un selection sort sobre el array
 ; Dejando el mas grande al final e iterativamente
@@ -10,28 +12,32 @@ GLOBAL selection_sort
 
 selection_sort:
 	pushf
+	pushad
+
 	.go:
 		call findMaxIndex
-		call swap
+		call swap_with_last
 	loop .go
 
+	popad
 	popf
 	ret
 
 
 ;Recibe:
 ;EBX: Direccion del array
-;ECX: Indice 1
-;EAX: Indice 2
-swap:
+;ECX: Tamaño del array
+;EAX: Indice a swappear con el ultimo
+swap_with_last:
 	push edi
 	push esi
-
+	dec ecx ;En ECX llega el tamaño, ECX - 1 es el ultimo indice
 	mov edi, [ebx + 4*ecx]
 	mov esi, [ebx + 4*eax]
 	mov [ebx + 4*ecx], esi
 	mov [ebx + 4*eax], edi
 
+	inc ecx ;Recupero los registros
 	pop esi
 	pop edi
 	ret
@@ -47,18 +53,18 @@ findMaxIndex:
 	push edx
 	push esi
 
+	test ecx, ecx
+	jz .fin 		;Si hay cero elementos ni entro
+
 	mov eax, 0
 	mov esi, [ebx]
-
-	test ecx, ecx
-	jz .fin
 
 	.findmax:
 		dec ecx
 		cmp esi, [ebx + 4*ecx]
 		jge .next
 
-		mov esi, [ebx + 4*ecx]
+		mov esi, [ebx + 4*ecx] ;Encontre un elemento mayor
 		mov eax, ecx
 	
 		.next:
@@ -66,10 +72,14 @@ findMaxIndex:
 		jnz .findmax
 	
 	.fin:
+
 	pop esi
 	pop edx
 	pop ecx
 	pop ebx
 
 	ret
+
+	section .bss
+		ary resb 30
 

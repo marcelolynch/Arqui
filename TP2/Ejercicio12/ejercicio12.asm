@@ -89,7 +89,7 @@ _start:
 
 	call exit
 
-
+;Imprime un cartel con el string que este en EBX
 print_nice_message:
 	push edx
 	push ebx
@@ -111,7 +111,7 @@ print_nice_message:
 
 	pop ebx
 	pop edx
-	ret
+ret
 
 
 ;Se distingue del anterior porque hay que imprimir el numerito :(
@@ -141,18 +141,17 @@ print_final_message:
 
 	pop ebx
 	pop edx
-	ret
+ret
 
 
 print_til_null:
 	.loop:
-			mov ebx, [esi]
-			call print_it	;Se imprime
-			
-			add esi, 4		;Avanzo en el stack
-			add eax, 4		;En EAX acumulo cuantos bytes recorro
-
-		test ebx, ebx
+		mov ebx, [esi]
+		call print_it	;Se imprime
+		
+		add esi, 4		;Avanzo en el stack
+		add eax, 4		;En EAX acumulo cuantos bytes recorro
+	test ebx, ebx
 	jnz .loop	;Hasta que en ebx haya un null
 ret
 
@@ -168,7 +167,7 @@ print_it:
 		call print
 	.fin:
 	pop ebx
-	ret
+ret
 
 section .rodata
 	newline db 10, 0

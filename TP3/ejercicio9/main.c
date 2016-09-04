@@ -8,25 +8,32 @@ void printStdioLine();
 
 
 int main(){
-//	printStdioLine();
+	int count;
+	char * name;
+	char * line;
+	File f;
+
 	puts("Ingrese el nombre de archivo que desea imprimir: >");
 	
-	char * name = get_line(MAXBUF);
-	File f = my_fopen(name, R);
+	name = get_line(MAXBUF);
+	f = my_fopen(name, R);
 	if(f == NULL){
 		puts("Error abriendo el archivo. Abortando\n");
 		return 0;
 	}
 
+	count = 0;
 	puts("\nImprimiendo linea por linea ");
 	puts(name);
 	puts("\n");
 
 	
-	char * line;
 	while((line = read_line(f, MAXBUF)) != NULL){
-	 puts(line);
-	 puts("\n");
+		puts(to_string(++count));
+		if(count < 10) puts(" "); //Formato lindo
+		puts(" | ");
+		puts(line);
+	 	puts("\n");
 	}
 
 

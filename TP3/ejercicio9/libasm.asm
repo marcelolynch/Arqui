@@ -6,6 +6,15 @@ GLOBAL sys_fopen
 GLOBAL sys_fclose
  
 ALIGN 4 
+
+;-----------------------------------------------------------
+; sys_write - Escribe al file descriptor
+;-----------------------------------------------------------
+; Argumentos:
+;	unsigned int fd - file descriptor
+;	char * buffer - buffer donde se encuentra la salida
+;	unsinged int length - cantidad de bytes a escribir
+;-----------------------------------------------------------
 sys_write: 
 push ebp 
 mov ebp, esp 
@@ -30,7 +39,7 @@ ret
 ; Argumentos:
 ;	unsigned int fd - file descriptor
 ; Retorno:
-;	eax: proximo caracter si existe, -1 si es EOF
+;	eax: proximo caracter si existe, -1 si es el EOF
 ;-----------------------------------------------------------
 sys_getchar:
 	push ebp

@@ -3,6 +3,7 @@
 #define CHARSIZE 1
 #define BLOCK
 
+
 int sys_fopen(char * name, int mode);
 int sys_fclose(int fd);
 static char * _getline(int fd, unsigned int max_size);

@@ -1,5 +1,5 @@
 GLOBAL keyRead
-
+;git am -3 alala.patch
 section .text
 keyRead:
 	xor rax, rax

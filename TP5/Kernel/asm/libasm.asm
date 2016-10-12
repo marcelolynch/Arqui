@@ -1,7 +1,5 @@
 GLOBAL cpuVendor
 
-section .text
-	
 cpuVendor:
 	push rbp
 	mov rbp, rsp

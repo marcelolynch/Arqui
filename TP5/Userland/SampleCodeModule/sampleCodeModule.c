@@ -70,9 +70,9 @@ int print_key(){
 	int key = keyRead();
 	if(key > 0){
 		s[0] = keyboard[key];
-		print("Tecla tocada: ");
 		print(s);
 	}
+	
 	return key;
 }
 
@@ -88,13 +88,15 @@ int printTick(){
 int main() {
 	clear();
 	newline();
-	/*
+	
 	print("Hello world!");
 	newline();
 	print_formatted("Arquitecturas de las Computadoras", 0xfa);
 	print_positioned("Random", 24, 37);
 	newline();
- 	while(!print_key());
-	*/
+ 	while(1){
+ 		print_key();
+ 	}
+	
 	return 0;
 }

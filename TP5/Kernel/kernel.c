@@ -92,15 +92,26 @@ void printTick(){
 	}
 }
 
+
+void tickHandler(){
+
+}
+
 int main()
 {	
+	
+	/*iSetHandler(0x20, tickHandler);
+	setPicMaster(0xFE);
+	sti();
+
+
 	ncClear();
 	ncPrint("[Kernel main]");
 	ncNewline();
 	ncNewline();
 	ncPrintHex(printTick);
 
-	int base = 0x9*16 + 0x20;
+	int base = 0x8*16 + 0x20;
 	ncNewline();
 	*((uint16_t*)(base)) = 	(uint16_t)(printTick);
 	*((uint16_t*)(base+6)) = (uint16_t)((int)printTick >> 16);
@@ -120,8 +131,8 @@ int main()
 	ncPrint("Reservado (0): "); ncPrintHex(*((uint32_t*)(base+12)));
 	ncNewline();
 	ncNewline();
-
-	//((EntryPoint)sampleCodeModuleAddress)();
+*/
+	((EntryPoint)sampleCodeModuleAddress)();
 	/*ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");

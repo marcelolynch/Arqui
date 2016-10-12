@@ -80,9 +80,48 @@ void * initializeKernelBinary()
 	return getStackBase();
 }
 
+static long num = 0;
+static int count = 0;
+void printTick(){
+	if(++count == 90){
+		count = 0;
+		num+=1;
+		ncClear();
+		ncPrint("Numero: ");
+		ncPrintDec(num);
+	}
+}
+
 int main()
 {	
-	((EntryPoint)sampleCodeModuleAddress)();
+	ncClear();
+	ncPrint("[Kernel main]");
+	ncNewline();
+	ncNewline();
+	ncPrintHex(printTick);
+
+	int base = 0x9*16 + 0x20;
+	ncNewline();
+	*((uint16_t*)(base)) = 	(uint16_t)(printTick);
+	*((uint16_t*)(base+6)) = (uint16_t)((int)printTick >> 16);
+
+	ncPrint("Offset 0-15: "); ncPrintHex(*((uint16_t*)(base)));
+	ncNewline();
+	ncPrint("Selector: "); ncPrintHex(*((uint16_t*)(base+2)));
+	ncNewline();
+	ncPrint("Bits 0-2 IST: "); ncPrintHex(*((uint8_t*)(base+4)));
+	ncNewline();
+	ncPrint("Type and attr: "); ncPrintBin(*((uint8_t*)(base+5)));
+	ncNewline();
+	ncPrint("Offset 16-31: "); ncPrintHex(*((uint16_t*)(base+6)));
+	ncNewline();
+	ncPrint("Offset 32-63:"); ncPrintHex(*((uint32_t*)(base+8)));
+	ncNewline();
+	ncPrint("Reservado (0): "); ncPrintHex(*((uint32_t*)(base+12)));
+	ncNewline();
+	ncNewline();
+
+	//((EntryPoint)sampleCodeModuleAddress)();
 	/*ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");

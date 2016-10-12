@@ -76,16 +76,25 @@ int print_key(){
 	return key;
 }
 
+static long num = 0;
+static int count;
+int printTick(){
+
+//	print(tick);
+	return 0;
+}
+
+
 int main() {
 	clear();
 	newline();
+	/*
 	print("Hello world!");
 	newline();
 	print_formatted("Arquitecturas de las Computadoras", 0xfa);
 	print_positioned("Random", 24, 37);
 	newline();
-
-	while(!print_key());
-	
+ 	while(!print_key());
+	*/
 	return 0;
 }
